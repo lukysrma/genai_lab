@@ -1,14 +1,9 @@
-#3. Train a custom Word2Vec model on a small dataset. Train embeddings on a domain-specific corpus (e.g., legal, medical) and analyze how embeddings capture domain-specific semantics.
-
-# Module or library install command (run this in terminal before running the script)
-# pip install gensim matplotlib scikit-learn
-
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 import numpy as np
 from gensim.models import Word2Vec
 
-# Sample domain-specific corpus (medical domain)
+
 medical_corpus = [
     "The patient was diagnosed with diabetes and hypertension.",
     "MRI scans reveal abnormalities in the brain tissue.",
@@ -22,25 +17,20 @@ medical_corpus = [
     "The diagnosis confirmed a rare genetic disorder."
 ]
 
-# Preprocess corpus (tokenize sentences and convert to lowercase)
 processed_corpus = [sentence.lower().split() for sentence in medical_corpus]
 
-# Train a Word2Vec model
 model = Word2Vec(sentences=processed_corpus, vector_size=100, window=5, min_count=1, workers=4, epochs=50)
 
-# Extract embeddings for visualization
-words = list(model.wv.index_to_key)  # List of words in the vocabulary
-embeddings = np.array([model.wv[word] for word in words])  # Word embeddings for each word
+words = list(model.wv.index_to_key)  
+embeddings = np.array([model.wv[word] for word in words])  
 
-# Dimensionality reduction using t-SNE
 tsne = TSNE(n_components=2, random_state=42, perplexity=5)
 tsne_result = tsne.fit_transform(embeddings)
 
-# Visualization of word embeddings
+
 plt.figure(figsize=(10, 8))
 plt.scatter(tsne_result[:, 0], tsne_result[:, 1], color="blue")
 
-# Annotating each point with the corresponding word
 for i, word in enumerate(words):
     plt.text(tsne_result[i, 0] + 0.02, tsne_result[i, 1] + 0.02, word, fontsize=12)
 
@@ -51,7 +41,6 @@ plt.grid(True)
 
 plt.show()
 
-# Analyze domain-specific semantics
 def find_similar_words(input_word, top_n=5):
     try:
         similar_words = model.wv.most_similar(input_word, topn=top_n)
@@ -61,6 +50,5 @@ def find_similar_words(input_word, top_n=5):
     except KeyError:
         print(f"'{input_word}' not found in vocabulary.")
 
-# Generate semantically similar words
 find_similar_words("treatment")
 find_similar_words("vaccine")
