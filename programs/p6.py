@@ -1,15 +1,7 @@
-#6. Use a pre-trained Hugging Face model to analyze sentiment in text. Assume a real-world application, Load the sentiment analysis pipeline. Analyze the sentiment by giving sentences to input.
-
-# Step 1: Install required libraries (only run once)
-# pip install transformers torch
-
-# Step 2: Import necessary library
 from transformers import pipeline
 
-# Step 3: Load the sentiment analysis pipeline using a pre-trained model
 sentiment_pipeline = pipeline("sentiment-analysis")
 
-# Step 4: Define input sentences (simulating real-world user reviews)
 input_sentences = [
     "The new phone I bought is absolutely amazing!",
     "Worst customer service ever. I'm never coming back.",
@@ -18,10 +10,8 @@ input_sentences = [
     "The product broke within two days. Very disappointed."
 ]
 
-# Step 5: Perform sentiment analysis
 results = sentiment_pipeline(input_sentences)
 
-# Step 6: Display the results
 print("Sentiment Analysis Results:\n")
 for sentence, result in zip(input_sentences, results):
     print(f"Input Sentence: {sentence}")
